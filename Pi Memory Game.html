@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pi Memory Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #pi-display {
+            font-size: 24px;
+            margin: 20px;
+        }
+        #pi-input {
+            font-size: 20px;
+            width: 300px;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pi Memory Game</h1>
+    <p>Enter as many digits of pi after 3 as possible (e.g. 14...)</p>
+    <p id="pi-display">3.</p>
+    <input type="text" id="pi-input" autofocus>
+    <p id="result-message"></p>
+
+    <script>
+        const pi = "1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679";
+        let currentIndex = 0;  // Start after the decimal point
+
+        const piDisplay = document.getElementById('pi-display');
+        const piInput = document.getElementById('pi-input');
+        const resultMessage = document.getElementById('result-message');
+
+        piInput.addEventListener('input', checkPi);
+
+        function checkPi() {
+            const inputValue = piInput.value;
+            const expectedDigit = pi[currentIndex];
+
+            if (inputValue.charAt(0) === expectedDigit) {
+                currentIndex++;
+                piDisplay.textContent += expectedDigit;
+                piInput.value = '';
+            } else if (expectedDigit) {
+                endGame();
+            }
+
+            if (currentIndex === pi.length) {
+                resultMessage.textContent = "Congratulations! You got all the digits of π!";
+                piInput.disabled = true;
+            }
+        }
+
+        function endGame() {
+            resultMessage.textContent = "Game Over! The correct digit was: " + pi[currentIndex];
+            piInput.disabled = true;
+        }
+    </script>
+</body>
+</html>
